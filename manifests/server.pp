@@ -620,7 +620,10 @@ define openvpn::server(
 
     if ($extca_ca_cert_file_source != undef)
     {
-      file { "${extca_ca_cert_file}":
+      # deal with relative path
+      if $extca_ca_cert_file[0] != '/' { $extca_ca_cert_file_full = "${etc_directory}/openvpn/${extca_ca_cert_file}"}
+      else {$extca_ca_cert_file_full = "${extca_ca_cert_file}"}
+      file { "${extca_ca_cert_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
@@ -631,7 +634,10 @@ define openvpn::server(
 
     if ($extca_ca_crl_file_source != undef)
     {
-      file { "${extca_ca_crl_file}":
+      # deal with relative path
+      if $extca_ca_crl_file[0] != '/' { $extca_ca_crl_file_full = "${etc_directory}/openvpn/${extca_ca_crl_file}"}
+      else {$extca_ca_crl_file_full = "${extca_ca_crl_file}"}
+      file { "${extca_ca_crl_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
@@ -642,7 +648,10 @@ define openvpn::server(
 
     if ($extca_server_cert_file_source != undef)
     {
-      file { "${extca_server_cert_file}":
+      # deal with relative path
+      if $extca_server_cert_file[0] != '/' { $extca_server_cert_file_full = "${etc_directory}/openvpn/${extca_server_cert_file}"}
+      else {$extca_server_cert_file_full = "${extca_server_cert_file}"}
+      file { "${extca_server_cert_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
@@ -653,7 +662,10 @@ define openvpn::server(
 
     if ($extca_server_key_file_source != undef)
     {
-      file { "${extca_server_key_file}":
+      # deal with relative path
+      if $extca_server_key_file[0] != '/' { $extca_server_key_file_full = "${etc_directory}/openvpn/${extca_server_key_file}"}
+      else {$extca_server_key_file_full = "${extca_server_key_file}"}
+      file { "${extca_server_key_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
@@ -664,7 +676,10 @@ define openvpn::server(
 
     if ($extca_dh_file_source != undef)
     {
-      file { "${extca_dh_file}":
+      # deal with relative path
+      if $extca_dh_file[0] != '/' { $extca_dh_file_full = "${etc_directory}/openvpn/${extca_dh_file}"}
+      else {$extca_dh_file_full = "${extca_dh_file}"}
+      file { "${extca_dh_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
@@ -676,7 +691,10 @@ define openvpn::server(
 
     if ($extca_tls_auth_key_file_source != undef)
     {
-      file { "${extca_tls_auth_key_file}":
+      # deal with relative path
+      if $extca_tls_auth_key_file[0] != '/' { $extca_tls_auth_key_file_full = "${etc_directory}/openvpn/${extca_tls_auth_key_file}"}
+      else {$extca_tls_auth_key_file_full = "${extca_tls_auth_key_file}"}
+      file { "${extca_tls_auth_key_file_full}":
         ensure    => file,
         mode      => '0640',
         owner     => 'root',
