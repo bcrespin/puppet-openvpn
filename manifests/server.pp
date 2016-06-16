@@ -338,6 +338,10 @@
 #    String. External CA: Path to the CA certificate.
 #    Default: undef
 #
+# [*extca_ca_cert_file_source*]
+#    String. External CA: Path to the CA certificate content
+#    Default: undef
+#
 # [*extca_ca_crl_file*]
 #    String. External CA: Path to the CA's CRL file.
 #            For FreeIPA-based CAs, CRLs expire every four hours, which means you
@@ -345,12 +349,24 @@
 #            Otherwise, you can set crl_verify to false (not recommended).
 #    Default: undef
 #
+# [*extca_ca_crl_file_source*]
+#    String. External CA: Path to the CA's CRL file content.
+#    Default: undef
+#
 # [*extca_server_cert_file*]
 #    String. External CA: Path to the external CA issued OpenVPN server certificate.
 #    Default: undef
 #
+# [*extca_server_cert_file_source*]
+#    String. External CA: Path to the external CA issued OpenVPN server certificate content.
+#    Default: undef
+#
 # [*extca_server_key_file*]
 #    String. External CA: Path to the key file that corresponds to $extca_server_cert_file
+#    Default: undef
+#
+# [*extca_server_key_file_source*]
+#    String. External CA: Path to the key file content that corresponds to $extca_server_cert_file
 #    Default: undef
 #
 # [*extca_dh_file*]
@@ -360,11 +376,19 @@
 #            Note: This is only required if you are enabling $tls_server.
 #    Default: undef
 #
+# [*extca_dh_file_source *]
+#    String. External CA: Path to your Dillie-Hellman parameter file content.
+#    Default: undef
+#
 # [*extca_tls_auth_key_file*]
 #    String. External CA: If you are enabling $extca_enabled and $tls_auth, you will also need to create
 #            the tls-auth key file and specify its location here.
 #            The file can be created like this: openvpn --genkey --secret /path/to/ta.key
 #            Note: you will need to distribute this file to your clients as well.
+#
+# [*extca_tls_auth_key_file_source*]
+#    String. External CA: the tls-auth key file content
+#    Default: undef
 #
 # [*autostart*]
 #   Boolean. Enable autostart for server if openvpn::autostart_all is false.
@@ -504,6 +528,12 @@ define openvpn::server(
   $extca_server_key_file     = undef,
   $extca_dh_file             = undef,
   $extca_tls_auth_key_file   = undef,
+  $extca_ca_cert_file_source      = undef,
+  $extca_ca_crl_file_source       = undef,
+  $extca_server_cert_file_source  = undef,
+  $extca_server_key_file_source   = undef,
+  $extca_dh_file_source           = undef,
+  $extca_tls_auth_key_file_source = undef,
   $autostart                 = undef,
   $ns_cert_type              = true,
   $nobind                    = false,
@@ -587,6 +617,74 @@ define openvpn::server(
     if $extca_server_key_file == undef { fail('extca_server_key_file has to be specified in extca mode') }
     if $extca_dh_file == undef and !$remote and $tls_server { fail('cant enable tls_server: missing extca_dh_file') }
     if $extca_tls_auth_key_file == undef and !$remote and $tls_auth { fail('cant enable tls_auth: missing extca_tls_auth_key_file') }
+
+    if ($extca_ca_cert_file_source != undef)
+    {
+      file { "${extca_ca_cert_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_ca_cert_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+      }
+    }
+
+    if ($extca_ca_crl_file_source != undef)
+    {
+      file { "${extca_ca_crl_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_ca_crl_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+      }
+    }
+
+    if ($extca_server_cert_file_source != undef)
+    {
+      file { "${extca_server_cert_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_server_cert_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+      }
+    }
+
+    if ($extca_server_key_file_source != undef)
+    {
+      file { "${extca_server_key_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_server_key_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+      }
+    }
+
+    if ($extca_dh_file_source != undef)
+    {
+      file { "${extca_dh_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_dh_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+
+      }
+    }
+
+    if ($extca_tls_auth_key_file_source != undef)
+    {
+      file { "${extca_tls_auth_key_file}":
+        ensure    => file,
+        mode      => '0640',
+        owner     => 'root',
+        content   => $extca_tls_auth_key_file_source,
+        require   => [ File ["${etc_directory}/openvpn/${name}/${name}"], File ["${etc_directory}/openvpn/${name}/keys"] ] ,
+      }
+    }
+
   }
 
   if !$remote {
