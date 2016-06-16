@@ -124,7 +124,7 @@ class openvpn::params {
       $root_group          = 'wheel'
       $group               = 'nogroup'
       $link_openssl_cnf    = true
-      $pam_module_path     = '/usr/local/lib/openvpn/openvpn-auth-pam.so'
+      $pam_module_path     = '/usr/local/lib/openvpn/plugins/openvpn-plugin-auth-pam.so'
       $additional_packages = ['easy-rsa']
       $easyrsa_source      = '/usr/local/share/easy-rsa'
       $namespecific_rclink = true
