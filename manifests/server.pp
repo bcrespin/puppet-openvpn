@@ -673,8 +673,8 @@ define openvpn::server(
       else {$extca_server_key_file_full = "${extca_server_key_file}"}
       file { "${extca_server_key_file_full}":
         ensure    => file,
-        mode      => '0640',
-        owner     => 'root',
+        mode      => '0400',
+        owner     => '${user}',
         source    => $extca_server_key_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}/keys"], File ["${etc_directory}/openvpn/keys"] ] ,
         before    => $lnotify,
@@ -705,8 +705,8 @@ define openvpn::server(
       else {$extca_tls_auth_key_file_full = "${extca_tls_auth_key_file}"}
       file { "${extca_tls_auth_key_file_full}":
         ensure    => file,
-        mode      => '0640',
-        owner     => 'root',
+        mode      => '0400',
+        owner     => '${user}',
         source    => $extca_tls_auth_key_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}/keys"], File ["${etc_directory}/openvpn/keys"] ] ,
         before    => $lnotify,
