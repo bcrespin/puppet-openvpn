@@ -410,6 +410,11 @@
 # [*custom_options*]
 #   Hash of additional options to append to the configuration file.
 #
+# [*scriptdir_source*]
+#   String. directory to be replicate into ${name}/scripts.
+#   This would host custom scripts
+#   Default: undef
+#
 # === Examples
 #
 #   openvpn::client {
@@ -538,6 +543,7 @@ define openvpn::server(
   $ns_cert_type              = true,
   $nobind                    = false,
   $secret                    = undef,
+  $scriptdir_source          = undef,
   $custom_options            = {},
 ) {
 
@@ -602,6 +608,20 @@ define openvpn::server(
     mode   => '0750',
     notify => $lnotify,
   }
+
+  if $scriptdir_source != undef
+  {
+    file { "${etc_directory}/openvpn/${name}/scripts":
+      ensure  => directory,
+      mode    => '0750',
+      recurse => true,
+      purge   => true,
+      notify  => $lnotify,
+      require => File ["${etc_directory}/openvpn/${name}"],
+      source  => $scriptdir_source
+    }
+  }
+
   if $shared_ca {
     ensure_resource(file, "${etc_directory}/openvpn/${ca_name}", {
       ensure => directory,
