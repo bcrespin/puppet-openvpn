@@ -629,6 +629,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_ca_cert_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
+        notify  => $lnotify,
       }
     }
 
@@ -643,6 +644,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_ca_crl_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
+        notify  => $lnotify,
       }
     }
 
@@ -657,6 +659,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_server_cert_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
+        notify  => $lnotify,
       }
     }
 
@@ -671,6 +674,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_server_key_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
+        notify  => $lnotify,
       }
     }
 
@@ -685,7 +689,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_dh_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
-
+        notify  => $lnotify,
       }
     }
 
@@ -700,6 +704,7 @@ define openvpn::server(
         owner     => 'root',
         source    => $extca_tls_auth_key_file_source,
         require   => [ File ["${etc_directory}/openvpn/${name}"], File ["${etc_directory}/openvpn/keys"] ] ,
+        notify  => $lnotify,
       }
     }
 
