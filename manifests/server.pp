@@ -621,7 +621,7 @@ define openvpn::server(
     if ($extca_ca_cert_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_ca_cert_file =~ /^\/*/ { $extca_ca_cert_file_full = "${etc_directory}/openvpn/${extca_ca_cert_file}"}
+      if ! $extca_ca_cert_file =~ /^\/*/ { $extca_ca_cert_file_full = "${etc_directory}/openvpn/${name}/${extca_ca_cert_file}"}
       else {$extca_ca_cert_file_full = "${extca_ca_cert_file}"}
       file { "${extca_ca_cert_file_full}":
         ensure    => file,
@@ -637,7 +637,7 @@ define openvpn::server(
     if ($extca_ca_crl_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_ca_crl_file =~ /^\/*/ { $extca_ca_crl_file_full = "${etc_directory}/openvpn/${extca_ca_crl_file}"}
+      if ! $extca_ca_crl_file =~ /^\/*/ { $extca_ca_crl_file_full = "${etc_directory}/openvpn/${name}/${extca_ca_crl_file}"}
       else {$extca_ca_crl_file_full = "${extca_ca_crl_file}"}
       file { "${extca_ca_crl_file_full}":
         ensure    => file,
@@ -653,7 +653,7 @@ define openvpn::server(
     if ($extca_server_cert_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_server_cert_file =~ /^\/*/  { $extca_server_cert_file_full = "${etc_directory}/openvpn/${extca_server_cert_file}"}
+      if ! $extca_server_cert_file =~ /^\/*/  { $extca_server_cert_file_full = "${etc_directory}/openvpn/${name}/${extca_server_cert_file}"}
       else {$extca_server_cert_file_full = "${extca_server_cert_file}"}
       file { "${extca_server_cert_file_full}":
         ensure    => file,
@@ -669,7 +669,7 @@ define openvpn::server(
     if ($extca_server_key_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_server_key_file =~ /^\/*/  { $extca_server_key_file_full = "${etc_directory}/openvpn/${extca_server_key_file}"}
+      if ! $extca_server_key_file =~ /^\/*/  { $extca_server_key_file_full = "${etc_directory}/openvpn/${name}/${extca_server_key_file}"}
       else {$extca_server_key_file_full = "${extca_server_key_file}"}
       file { "${extca_server_key_file_full}":
         ensure    => file,
@@ -685,7 +685,7 @@ define openvpn::server(
     if ($extca_dh_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_dh_file =~ /^\/*/  { $extca_dh_file_full = "${etc_directory}/openvpn/${extca_dh_file}"}
+      if ! $extca_dh_file =~ /^\/*/  { $extca_dh_file_full = "${etc_directory}/openvpn/${name}/${extca_dh_file}"}
       else {$extca_dh_file_full = "${extca_dh_file}"}
       file { "${extca_dh_file_full}":
         ensure    => file,
@@ -701,7 +701,7 @@ define openvpn::server(
     if ($extca_tls_auth_key_file_source != undef)
     {
       # deal with relative path
-      if ! $extca_tls_auth_key_file =~ /^\/*/  { $extca_tls_auth_key_file_full = "${etc_directory}/openvpn/${extca_tls_auth_key_file}"}
+      if ! $extca_tls_auth_key_file =~ /^\/*/  { $extca_tls_auth_key_file_full = "${etc_directory}/openvpn/${name}/${extca_tls_auth_key_file}"}
       else {$extca_tls_auth_key_file_full = "${extca_tls_auth_key_file}"}
       file { "${extca_tls_auth_key_file_full}":
         ensure    => file,
